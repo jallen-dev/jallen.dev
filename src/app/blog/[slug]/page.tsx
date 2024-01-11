@@ -1,7 +1,9 @@
-import { Code } from "@/components/Code"
+import { CodeBlock } from "@/components/CodeBlock"
 import { getBlogPostForSlug } from "@/utils/file-utils"
 import { MDXRemote } from "next-mdx-remote/rsc"
 import { notFound } from "next/navigation"
+
+import styles from "./style.module.css"
 
 export async function generateMetadata({ params }: { params: { slug: string } }) {
   const blogPost = await getBlogPostForSlug(params.slug)
@@ -22,7 +24,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
   }
 
   return (
-    <article>
+    <article className={styles.page}>
       <h1>{blogPost.frontmatter.title}</h1>
       {/* @ts-expect-error type of components */}
       <MDXRemote source={blogPost.content} components={components} />
@@ -31,5 +33,5 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
 }
 
 const components = {
-  pre: Code,
+  pre: CodeBlock,
 } as const
