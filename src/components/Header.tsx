@@ -1,6 +1,6 @@
-import { DiscordLogoIcon } from "@radix-ui/react-icons";
-import { Twitch, Twitter, GitHub } from "react-feather";
-import Link from "next/link";
+import { DiscordLogoIcon } from "@radix-ui/react-icons"
+import Link from "next/link"
+import { GitHub, Twitch, Twitter } from "react-feather"
 
 export function Header() {
   return (
@@ -20,9 +20,7 @@ export function Header() {
             <DiscordLogoIcon className="w-8 h-8" />
           </a>
         </span>
-        <h1 className="grow basis-0 text-5xl text-center leading-loose">
-          Jallen.dev
-        </h1>
+        <h1 className="grow basis-0 text-5xl text-center leading-loose">Jallen.dev</h1>
         <span className="grow basis-0"></span>
       </div>
       <ul className="flex gap-4">
@@ -34,5 +32,5 @@ export function Header() {
         </li>
       </ul>
     </header>
-  );
+  )
 }
