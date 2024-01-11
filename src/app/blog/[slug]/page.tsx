@@ -1,11 +1,10 @@
-import { BlogPost } from "@/types/BlogPost"
+import { Code } from "@/components/Code"
 import { getBlogPostForSlug } from "@/utils/file-utils"
+import { MDXRemote } from "next-mdx-remote/rsc"
 import { notFound } from "next/navigation"
 
 export async function generateMetadata({ params }: { params: { slug: string } }) {
-  console.log({ params })
   const blogPost = await getBlogPostForSlug(params.slug)
-  console.log({ blogPost })
   if (!blogPost) {
     notFound()
   }
@@ -25,7 +24,12 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
   return (
     <article>
       <h1>{blogPost.frontmatter.title}</h1>
-      <p>{blogPost.content}</p>
+      {/* @ts-expect-error type of components */}
+      <MDXRemote source={blogPost.content} components={components} />
     </article>
   )
 }
+
+const components = {
+  pre: Code,
+} as const
