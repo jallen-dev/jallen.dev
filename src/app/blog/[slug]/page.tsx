@@ -6,6 +6,8 @@ import { notFound } from "next/navigation"
 
 import styles from "./style.module.css"
 
+export const dynamicParams = false
+
 export async function generateStaticParams() {
   const posts = await getBlogPosts()
 
