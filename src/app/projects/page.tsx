@@ -2,7 +2,7 @@ import { ExternalLinkIcon } from "@radix-ui/react-icons"
 import Image from "next/image"
 
 import astroclicker from "../../../public/images/astroclicker.png"
-import openpilot from "../../../public/images/openpilot.gif"
+import openpilot from "../../../public/images/openpilot.png"
 
 export default function ProjectsPage() {
   return (
@@ -16,6 +16,7 @@ export default function ProjectsPage() {
             width={384}
             height={233}
             className="rounded-2xl"
+            placeholder="blur"
           />
           <div className="flex flex-col">
             <h3 className="underline underline-offset-4">
@@ -33,10 +34,11 @@ export default function ProjectsPage() {
         <article className="flex flex-col md:flex-row gap-2">
           <Image
             src={openpilot}
-            alt="Screen shot of my game AstroClicker"
+            alt="Screenshot of OpenPilot"
             width={384}
             height={233}
             className="rounded-2xl"
+            placeholder="blur"
           />
           <div className="flex flex-col">
             <h3 className="underline underline-offset-4">

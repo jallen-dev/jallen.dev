@@ -12,7 +12,12 @@ export default async function Home() {
       <section>
         <h2 className="text-fuchsia-600">Featured project</h2>
         <article className="flex flex-col md:flex-row gap-2">
-          <Image src={astroclicker} alt="Screen shot of my game AstroClicker" className="w-80 rounded-2xl" />
+          <Image
+            src={astroclicker}
+            alt="Screen shot of my game AstroClicker"
+            className="w-80 rounded-2xl"
+            placeholder="blur"
+          />
           <div className="flex flex-col">
             <h3 className="underline underline-offset-4">
               <a href="https://astroclicker.com" target="_blank" className="flex gap-2 items-baseline">

@@ -51,7 +51,14 @@ function PictureWithNameTitle() {
 function Picture() {
   return (
     <div className="rounded-full overflow-hidden aspect-square w-64 h-64">
-      <Image src={image} alt="Picture of the author" width={256} height={256} style={{ objectFit: "cover" }} />
+      <Image
+        src={image}
+        alt="Picture of the author"
+        width={256}
+        height={256}
+        style={{ objectFit: "cover" }}
+        placeholder="blur"
+      />
     </div>
   )
 }
