@@ -8,10 +8,10 @@ import astroclicker from "../../public/images/astroclicker.png"
 export default async function Home() {
   const blogPosts = await getBlogPosts()
   return (
-    <main className="flex flex-col gap-16 pb-8">
+    <main className="flex flex-col gap-16">
       <section>
         <h2 className="text-fuchsia-600">Featured project</h2>
-        <article className="flex gap-2">
+        <article className="flex flex-col md:flex-row gap-2">
           <Image src={astroclicker} alt="Screen shot of my game AstroClicker" className="w-80 rounded-2xl" />
           <div className="flex flex-col">
             <h3 className="underline underline-offset-4">

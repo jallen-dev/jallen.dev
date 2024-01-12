@@ -9,7 +9,7 @@ export default function ProjectsPage() {
     <main>
       <h2 className="text-fuchsia-600">Projects</h2>
       <div className="flex flex-col gap-4">
-        <article className="flex gap-2">
+        <article className="flex flex-col md:flex-row gap-2">
           <Image
             src={astroclicker}
             alt="Screen shot of my game AstroClicker"
@@ -30,7 +30,7 @@ export default function ProjectsPage() {
           </div>
         </article>
 
-        <article className="flex gap-2">
+        <article className="flex flex-col md:flex-row gap-2">
           <Image
             src={openpilot}
             alt="Screen shot of my game AstroClicker"

@@ -6,7 +6,7 @@ import image from "../../public/images/react-jam-winter-2023.png"
 
 export function BlogPostPreview({ blogPost }: { blogPost: Omit<BlogPost, "content"> }) {
   return (
-    <article key={blogPost.slug} className="flex gap-2">
+    <article key={blogPost.slug} className="flex flex-col md:flex-row gap-2">
       <Image src={image} alt={blogPost.frontmatter.title} className="w-80" />
       <div className="flex flex-col">
         <h3>

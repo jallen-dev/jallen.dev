@@ -4,7 +4,7 @@ import { GitHub, Twitch, Twitter } from "react-feather"
 
 export function Header() {
   return (
-    <header className="flex flex-col mb-8 p-2">
+    <header className="flex flex-col mb-8">
       <div className="md:flex justify-between items-baseline">
         <span className="flex gap-4">
           <a href="https://twitter.com/jallen_dev" target="_blank">

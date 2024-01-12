@@ -25,7 +25,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
   }
 
   return (
-    <article className="p-2 pb-10">
+    <article>
       <Hero title={blogPost.frontmatter.title} slug={params.slug} />
       <div className={styles.page}>
         {/* @ts-expect-error type of components */}
