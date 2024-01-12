@@ -1,7 +1,7 @@
 ---
 title: "React Jam Winter 2023"
 abstract: "I participated in my first-ever game jam and I used React, Pixi React, and Rune to build a multiplayer game. This post documents my thoughts and experiences using this tech stack."
-publishedOn: "2024-01-11T12:00:00-0400"
+publishedOn: "2024-01-12T12:00:00-0400"
 ---
 
 A few days ago I completed my first-ever game jam, [React Jam Winter 2023](https://reactjam.com/). This was a 13 day challenge to build a game using React, and optionally [Rune](https://www.rune.ai/) for multiplayer functionality. This was also my first time using [Pixi React](https://github.com/pixijs/pixi-react) and my first time using the [Rune SDK](https://developers.rune.ai/).
@@ -10,9 +10,11 @@ Overall, it went very smoothly. I'll share what worked nicely, some pitfalls I f
 
 ## What went well
 
+Keeping components in sync with game state was a breeze. This was thanks to the state management library I used and the way Rune works.
+
 ### Zustand + Rune = easy and highly-performant updates to your react components
 
-I recommend using [Zustand](https://github.com/pmndrs/zustand) for managing state client-side, and it works perfectly with Rune. The nice thing about Zustand is it's dead-simple to use. Your react components simply use a hook to select what data they need out of the store. What's more, your component will only re-render if the specific thing it selects changes (not when any other part of the store changes).
+I recommend using [Zustand](https://github.com/pmndrs/zustand) for managing state client-side, and it works perfectly with Rune. The nice thing about Zustand is it's so easy to use. Your react components simply use a hook to select what data they need out of the store. What's more, your component will only re-render if the specific thing it selects changes (not when any other part of the store changes).
 
 You can just chuck the entire `game` state object into your store, and let every component pull what they need out of it.
 
@@ -71,9 +73,9 @@ This massively improves performance by preventing unnecessary re-renders, which 
 
 If you have used Redux or anything resembling an event-based architecture, this should seem familiar. But if you haven't, this could take some adjustment.
 
-This is actually really powerful and scalable. It's easier to understand all the ways players can influence the game, because they are all defined in one place in the `actions` property of your logic. Not strewn throughout your program like spaghetti code.
+This is actually really powerful and scalable. With this design, it's easier to understand all the ways players can influence the game because they are all defined in one place: in the `actions` property of your logic. Not strewn throughout your program like spaghetti code.
 
-It's easier to avoid bugs when all of your UI is just a declarative representation of the latest state of the game. All sorts of bugs in applications are caused by parts of the system getting out of sync, or clobbering each other in race conditions. Rune avoids this by making everything happen via actions and applying them in order.
+It's easier to avoid bugs when all of your UI is a declarative representation of the latest state of the game. All sorts of bugs in applications are caused by parts of the system getting out of sync, or clobbering each other in race conditions. Rune avoids this by making everything happen via actions and applying them in order.
 
 ## Pitfalls
 
