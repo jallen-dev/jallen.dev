@@ -7,7 +7,7 @@ import openpilot from "../../../public/images/openpilot.gif"
 export default function ProjectsPage() {
   return (
     <main>
-      <h2>Projects</h2>
+      <h2 className="text-fuchsia-600">Projects</h2>
       <div className="flex flex-col gap-4">
         <article className="flex gap-2">
           <Image
