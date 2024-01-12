@@ -1,4 +1,5 @@
 import { CodeBlock } from "@/components/CodeBlock"
+import { Hero } from "@/components/Hero"
 import { getBlogPostForSlug } from "@/utils/file-utils"
 import { MDXRemote } from "next-mdx-remote/rsc"
 import { notFound } from "next/navigation"
@@ -24,10 +25,12 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
   }
 
   return (
-    <article className={styles.page}>
-      <h1>{blogPost.frontmatter.title}</h1>
-      {/* @ts-expect-error type of components */}
-      <MDXRemote source={blogPost.content} components={components} />
+    <article className="p-2 pb-10">
+      <Hero title={blogPost.frontmatter.title} slug={params.slug} />
+      <div className={styles.page}>
+        {/* @ts-expect-error type of components */}
+        <MDXRemote source={blogPost.content} components={components} />
+      </div>
     </article>
   )
 }
