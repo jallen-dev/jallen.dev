@@ -27,7 +27,7 @@ h3,
 h4,
 h5,
 h6 {
-  @apply mb-6;
+  @apply mb-6 text-amber-200;
 }
 
 h1 {
