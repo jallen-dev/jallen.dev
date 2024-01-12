@@ -40,7 +40,7 @@ export default function ProjectsPage() {
           />
           <div className="flex flex-col">
             <h3 className="underline underline-offset-4">
-              <a href="https://astroclicker.com" target="_blank" className="flex gap-2 items-baseline">
+              <a href="https://github.com/jallen-dev/openpilot" target="_blank" className="flex gap-2 items-baseline">
                 OpenPilot <ExternalLinkIcon className="w-6 h-6" />
               </a>
             </h3>
