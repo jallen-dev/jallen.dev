@@ -9,11 +9,11 @@ export function BlogPostPreview({ blogPost }: { blogPost: Omit<BlogPost, "conten
     <article key={blogPost.slug} className="flex gap-2">
       <Image src={image} alt={blogPost.frontmatter.title} className="w-80" />
       <div className="flex flex-col">
-        <h2>
+        <h3>
           <Link href={"blog/" + blogPost.slug} className="underline underline-offset-4">
             {blogPost.frontmatter.title}
           </Link>
-        </h2>
+        </h3>
         <p>{blogPost.frontmatter.abstract}</p>
       </div>
     </article>
