@@ -1,10 +1,18 @@
 import { CodeBlock } from "@/components/CodeBlock"
 import { Hero } from "@/components/Hero"
-import { getBlogPostForSlug } from "@/utils/file-utils"
+import { getBlogPostForSlug, getBlogPosts } from "@/utils/file-utils"
 import { MDXRemote } from "next-mdx-remote/rsc"
 import { notFound } from "next/navigation"
 
 import styles from "./style.module.css"
+
+export async function generateStaticParams() {
+  const posts = await getBlogPosts()
+
+  return posts.map((post) => ({
+    slug: post.slug,
+  }))
+}
 
 export async function generateMetadata({ params }: { params: { slug: string } }) {
   const blogPost = await getBlogPostForSlug(params.slug)
