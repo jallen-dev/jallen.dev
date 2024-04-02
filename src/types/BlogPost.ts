@@ -3,7 +3,7 @@ export type BlogPost = {
   content: string
   frontmatter: {
     title: string
-    publishedOn: string
+    publishedOn: Date
     abstract: string
   }
 }

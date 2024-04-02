@@ -23,6 +23,7 @@ export async function getBlogPosts() {
     // TODO: validate frontmatter
     // @ts-expect-error missing properties
     const { data: frontmatter } = matter(fileContent) as { data: BlogPost["frontmatter"] }
+    frontmatter.publishedOn = new Date(frontmatter.publishedOn)
 
     blogPosts.push({
       slug: fileName.replace(".mdx", ""),
@@ -30,8 +31,7 @@ export async function getBlogPosts() {
     })
   }
 
-  // @ts-expect-error publishedOn does not exist on type
-  return blogPosts.sort((a, b) => (a.publishedOn < b.publishedOn ? 1 : -1))
+  return blogPosts.sort((a, b) => (a.frontmatter.publishedOn < b.frontmatter.publishedOn ? 1 : -1))
 }
 
 function readFile(localPath: string) {

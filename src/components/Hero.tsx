@@ -1,12 +1,18 @@
 import Image from "next/image"
 
-import image from "../../public/images/react-jam-winter-2023.png"
-
 export function Hero({ title, slug }: { title: string; slug: string }) {
   return (
     <div className="flex flex-col gap-4">
-      <Image src={image} alt={title} placeholder="blur" />
-      <h1 className="">{title}</h1>
+      <HeroImage slug={slug} />
+      <h1>{title}</h1>
     </div>
   )
+}
+
+function HeroImage({ slug }: { slug: string }) {
+  try {
+    return <Image src={require(`../../public/images/${slug}.png`)} alt={slug} placeholder="blur" />
+  } catch (e) {
+    return null
+  }
 }
