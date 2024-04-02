@@ -1,0 +1,100 @@
+---
+title: "Combining Pixi-React and HTML with Tunnels"
+abstract: "Normally Pixi components can only contain things that get added to your Pixi app's stage. In this article I demonstrate a pattern to combine both Pixi and DOM elements to better organize components."
+publishedOn: "2024-03-29T12:00:00-0400"
+---
+
+Recently I started using [Pixi React](https://pixijs.io/pixi-react/) to make little games. If you're not familiar, Pixi React is a React.js renderer for Pixi, which means you can use JSX to build components which compose Pixi objects and have them update reactively.
+
+This is great because I love React and the many tools in the React ecosystem. However there is an annoying problem I encountered when building [my first game](https://app.rune.ai/dev-UYKQKC54), which I solved using a neat pattern in [my second game](https://app.rune.ai/dev-kMRzNHF4).
+
+Before I describe the pattern, let me explain the problem it solves.
+
+## The Problem
+
+Normally, Pixi React components can only be children of `<Stage>` or other Pixi components (in other words, they must all be decendents of a `<Stage>`). This is because Pixi components need to be rendered to a `canvas` and `<Stage>` marks the entry point where Pixi React's reconciler takes over.
+
+And normally Pixi components can't contain children like `div`, `span`, etc. because those are DOM elements. Pixi doesn't know what to do with them.
+
+So we can't mix Pixi components with DOM elements or react-dom components. This is really inconvenient. I like to organize components around a single concern, and I kept finding that an intuitive component in my game would ideally include both Pixi and DOM elements.
+
+Let's imagine such a component. Imagine our game has `Enemy`s which have sprites that we render in Pixi. An `Enemy` also has some HP, which we display in an HP bar.
+
+I'd like to render that HP bar using a `div`, text, and CSS. Why?
+
+1. It's quicker, easier, and more readable. Compare `<div className="hp-bar">{hp}</div>` to what you'd have to do in Pixi with `<Graphics>`, `<Text>`, and a bunch of props you need to pass to those components.
+
+2. CSS is much more powerful and convenient than Pixi's styling. Especially when it comes to things like `flex` and `grid` for more flexible UIs.
+
+## The Solution
+
+So how can we combine both Pixi components and DOM elements? By using [tunnels](https://github.com/pmndrs/tunnel-rat). I first saw this library being used in react-three-fiber, which is a React renderer for Three.js.
+
+A tunnel lets you define elements/sub-components in one component, but then when the component is mounted, those elements get teleported to somewhere else in the React tree.
+
+The tunnel has 1 or more `In`s where React children go in, and they come out where ever the `Out` is rendered.
+
+So our `Enemy` component could look something like:
+
+```jsx
+export function Enemy({ entityId }) {
+  const hp = useGameStore((state) => state.game.entities[entityId].hp)
+  const position = useGameStore((state) => state.game.entities[entityId].position)
+
+  return (
+    <>
+      <Sprite image="badguy" position={position} />
+      <Html.In>
+        <div className="hp-bar">{hp}</div>
+      </Html.In>
+    </>
+  )
+}
+```
+
+`<Html.In>` is the tunnel where we can put DOM elements or react-dom components in, and have them come out where we render a `<Html.Out>` (which will be outside of the `<Stage>`).
+
+We can do the opposite, too. If we have a react-dom component that wants to render something to the canvas, we can put it inside of another tunnel, `<Pixi.In>`. No matter where the component is in the React tree. It doesn't need to be the component that renders `<Stage>`.
+
+## A real-life sample
+
+Here is a complete example from my game Melancia Game. Melancia Game is a game where you drop fruit into a container and try to get fruits of the same type to merge together. You play against 1-3 `Rival`s to score the most points in 5 minutes.
+
+Here's the component that renders a player's `Rival`:
+
+```jsx
+function Rival({ playerId, position }: { playerId: string; position: { x: number; y: number } }) {
+  const details = useGameStore((state) => state.playerDetails[playerId])
+  const [x, y] = useGlobalPosition(position)
+  const transform = `translate(${x}px, ${y}px)`
+
+  return (
+    <Container scale={0.4} position={position}>
+      <FruitContainer playerId={playerId} />
+      <Fruits playerId={playerId} />
+      <Html.In>
+        <div className="fixed -left-10 -top-8" style={{ transform }}>
+          <div className="flex max-w-[33vw] items-center">
+            <img src={details.avatarUrl} alt={details.displayName} className="h-8 w-8" />
+            <span className="w-full overflow-hidden overflow-ellipsis whitespace-nowrap text-center text-black">
+              {details.displayName}
+            </span>
+          </div>
+        </div>
+      </Html.In>
+    </Container>
+  )
+}
+```
+
+This is a Pixi component which renders a `<Container>` and other Pixi components made up of `Sprite`s and `Graphics`. But it also renders the rival's avatar and name, which are rendered with `img` and `span`. Those are positioned relative to the container using `transform`.
+
+The nice thing about this is I can just map over the list of other players and render a `<Rival>` for each one. The fact that a rival is displayed using 2 different renderers becomes an implementation detail.
+
+How would I do this without a tunnel? I would have to split this component up. I'd need to map over the players in a component under `<Stage>` to draw them to the canvas, and somewhere else in my React tree map over the players to render the HP bars.
+
+That's duplicate code. And worse, I'd be structuring my components arbitrarily by display media (i.e. canvas vs DOM) instead of by concern (i.e. render a player).
+
+## Try it yourself
+
+If you want to try this out yourself, and especially if you are interested in making games on Rune, then you might be interested in [this starter project I created](https://github.com/jallen-dev/rune-pixi-react-starter).
