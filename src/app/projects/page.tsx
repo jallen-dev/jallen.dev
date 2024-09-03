@@ -1,15 +1,20 @@
+import { DuskGame } from "@/components/DuskGame"
 import { ExternalLinkIcon } from "@radix-ui/react-icons"
 import Image from "next/image"
 
 import astroclicker from "../../../public/images/astroclicker.png"
 import coinjar from "../../../public/images/coinjar.png"
+import chess from "../../../public/images/dusk-games-previews/chess.png"
+import fruitscape from "../../../public/images/dusk-games-previews/fruitscape.png"
+import melanciaGame from "../../../public/images/dusk-games-previews/melancia-game.png"
+import tapTheButton from "../../../public/images/dusk-games-previews/tap-the-button.png"
 import openpilot from "../../../public/images/openpilot.png"
 
 export default function ProjectsPage() {
   return (
     <main>
       <h2 className="text-fuchsia-600">Projects</h2>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 mb-10">
         <article className="flex flex-col md:flex-row gap-4">
           <Image
             src={coinjar}
@@ -76,6 +81,33 @@ export default function ProjectsPage() {
             </p>
           </div>
         </article>
+      </div>
+
+      <h2 id="dusk-games" className="text-fuchsia-600">
+        Dusk Games
+      </h2>
+
+      <div className="flex flex-wrap gap-8 justify-around">
+        <DuskGame image={fruitscape}>
+          <DuskGame.Name link="https://join.rune.ai/game/HjQjViR2-2Q">Fruitscape</DuskGame.Name>
+          <DuskGame.Plays plays="125k+" />
+          <DuskGame.ReactJam place={2} name="React Jam Winter 2023 Multiplayer Challenge" />
+        </DuskGame>
+        <DuskGame image={melanciaGame}>
+          <DuskGame.Name link="https://join.rune.ai/game/SHfLUCF1--">Melancia Game</DuskGame.Name>
+          <DuskGame.Plays plays="995k+" />
+          <DuskGame.LeaderboardBounty />
+        </DuskGame>
+        <DuskGame image={tapTheButton}>
+          <DuskGame.Name link="https://join.rune.ai/game/Z1yZFtJ7-HAE">Tap The Button</DuskGame.Name>
+          <DuskGame.Plays plays="225k+" />
+          <DuskGame.ReactJam place={1} name="React Jam Spring 2024 Multiplayer Challenge" />
+        </DuskGame>
+        <DuskGame image={chess}>
+          <DuskGame.Name link="https://join.rune.ai/game/jvZoyoWb-KwE">Chess</DuskGame.Name>
+          <DuskGame.Plays plays="200k+" />
+          <DuskGame.LeaderboardBounty />
+        </DuskGame>
       </div>
     </main>
   )
