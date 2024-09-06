@@ -1,0 +1,65 @@
+---
+title: "React Jam Spring 2024"
+abstract: "My game won first place in this jam's Multiplayer Challenge. Here's a quick write-up of my ideas for the theme, how development went, and my thoughts on the game's results."
+publishedOn: "2024-09-04T12:00:00-0400"
+---
+
+I'm a bit late in writing this up, as the jam ended about three months ago. But I figured better late than never. If you're not familiar, [React Jam](https://reactjam.com/) is a game jam where you have 12 days to build a game using React.js. There is also an optional Multiplayer Challenge if you use Dusk's SDK to build a multiplayer game hosted on their platform.
+
+I won't bury the lede: my game [won first place in the Multiplayer Challenge](https://reactjam.com/winners)! But to be honest, I'm not very proud of this game. I'll get into that below.
+
+## The theme and my initial idea
+
+This jam's theme was "1 Tap": design a game with simple controls that boil down to a single tap, click, drag, or swipe. Among the examples presented were idle games including Cookie Clicker. Well I'm a big fan of incrementals, [having built a couple myself](https://jallen.dev/projects), so I knew right away what kind of game I wanted to make.
+
+The idea that first popped into my head was a game similar to one called [Grass Cutting Incremental](https://www.roblox.com/games/9292879820/MULTIVERSE-Grass-Cutting-Incremental) (GCI for short). GCI is a popular Roblox incremental game where you run around a small field to cut grass (the grass gets cut by simply colliding with your hit box). Somebody ported GCI to the web and made it so you drag your mouse over a square to cut grass. This single dragging motion is what the jam's theme immediately reminded me of.
+
+Here was my idea: Instead of cutting grass in a field, you would be washing a window. Your finger would be a squeegee and you would swipe around your phone screen to remove cleaning liquid from the window. Dirt would build up on the window over time. The more you swipe, the more points you get. You would then spend points on upgrades like a bigger squeegee (bigger hit box for your finger) or stronger cleaning liquid or something.
+
+It would also be multiplayer. You would see where your friends are swiping, indicated by a circle. You could work as a team—maybe you stick to the bottom half of the screen and your friend takes care of the top half. That way you divide the work and earn points twice as fast.
+
+## So what happened to that idea?
+
+Unfortunately, I was busy the week of the jam and didn't get a chance to really sit down and begin until the weekend before the submission deadline! With a few days left, I started thinking about how I would implement the idea. I felt there was a risk that I would not finish it in time.
+
+Here is how I would implement it: the screen would be divided into a bunch of little squares. Each square would have a `onPointerEnter` event callback. That callback would trigger an action with the square's id in the payload. In the game logic, I would calculate how much that square is worth based on how long since it was last cleaned, the player's upgrades, and any other gameplay mechanics.
+
+![Concept art for "Window Washing Simulator"](/images/window-washing-simulator-concept.jpeg)
+
+There are some challenges I anticipate with this implementation:
+
+1. There are a limited number of actions that can be sent per second. So we'll likely want to batch the callbacks and send all the swiped ids together in one action, up to about 10 times per second.
+
+2. But we'll want to make sure swiping still looks and feels smooth.
+
+3. What if the player goes ham and rapidly swipes their finger over the entire screen? Do we need to somehow limit how much swiping the player can do? How do we determine which squares get counted as being swiped, and how do we give feedback to the player that they're swiping too fast?
+
+4. Devices come in all different shapes and sizes. Do we scale the grid to cover the player's screen? The squares might not be "square" any more. Will that look weird or cause problems?
+
+And of course there will likely be unanticipated challenges as well. Given this, I wasn't 100% confident I could complete this in time and be satisfied with the result. So I decided to go with a much simpler idea.
+
+## Tap The Button
+
+The simplest implementation for an incremental game is just a single button. So that's what I went with: there'd be a big button in the middle of the screen, and you'd get a point every time you tapped on it. Then you'd spend points to increase your "tap power" or buy auto-tappers to tap for you.
+
+I wanted tapping the button to be as satisfying as possible. I remembered Josh Comeau wrote a blog post about using CSS to make a [whimsical 3D button](https://www.joshwcomeau.com/animation/3d-button/), so I took that CSS and modified it ever so slightly. Then I found some royalty-free click sound effects that I could randomly cycle through to make tapping the button even more juicy.
+
+Dusk's [data persistence API](https://developers.dusk.gg/docs/advanced/persisted-data) was released just in time for the jam and I wanted to try it for this game. I persist the player's taps and upgrades so they can come back later and tap some more.
+
+I also use persistence to enable the auto-tappers to work even when the game isn't running. At the end of every `update` tick, I store the current timestamp. Each `update` starts by calculating how much time has passed for each player, and multiplies that delta by their auto-tapper upgrades to determine how many taps to add. This way if the player has just come back after several minutes/hours/days, they will get the correct number of taps since the last time an `update` tick was run for them. And if it's been more than a minute for that player, they'll also get a welcome popup telling them how many taps they got.
+
+To encourage people to play the game with their friends, I grant a +100% bonus for each additional player in the game. The player is encouraged to take advantage of this bonus by displaying a popup when they reach a certain level.
+
+## The results
+
+The game is extremely basic, even as far as incrementals go. There's only 3 types of upgrades. Every time you level up, you get a few more skill points you can put into these upgrades. You can prestige, which basically resets the game for you but you're granted "super taps" which give a permanent bonus (a staple gameplay mechanic of incremental games).
+
+You basically see everything there is to see after a few minutes.
+
+The level scaling is not very good after the first 10 or so levels, because I didn't have time to figure out a good scaling formula based on time + upgrades + prestige. I basically picked arbitrary numbers and play tested a few times until the beginning levels felt pretty good.
+
+Despite all that, it gained just over 140,000 minutes of total playtime during the evaluation week. This earned it first place, just barely beating [Cathead Defense](https://join.rune.ai/game/5ijP9fuR-CQE) which is a cute tower defense game (and a better game IMO).
+
+Tap The Button is kinda lame if I'm being honest. It's still performing quite well, getting about 1000 hours of total playtime each week. I cringe a little every time I get a weekly update showing how many hours were spent playing this dumb game 😅.
+
+Maybe what I should do is go back and add some stuff to the game, and turn it into something more worthy. The only problem is the idea is so basic that I don't really know where to go with it. If you have any ideas, let me know.

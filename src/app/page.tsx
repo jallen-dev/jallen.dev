@@ -35,9 +35,11 @@ export default async function Home() {
       </section>
       <section>
         <h2 className="text-fuchsia-600">Recent blog posts</h2>
-        {blogPosts.map((blogPost) => (
-          <BlogPostPreview key={blogPost.slug} blogPost={blogPost} />
-        ))}
+        <div className="flex flex-col gap-8">
+          {blogPosts.map((blogPost) => (
+            <BlogPostPreview key={blogPost.slug} blogPost={blogPost} />
+          ))}
+        </div>
       </section>
     </main>
   )

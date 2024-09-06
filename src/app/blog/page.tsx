@@ -6,9 +6,11 @@ export default async function BlogPage() {
   return (
     <main>
       <h2 className="text-fuchsia-600">Blog posts</h2>
-      {blogPosts.map((blogPost) => (
-        <BlogPostPreview key={blogPost.slug} blogPost={blogPost} />
-      ))}
+      <div className="flex flex-col gap-8">
+        {blogPosts.map((blogPost) => (
+          <BlogPostPreview key={blogPost.slug} blogPost={blogPost} />
+        ))}
+      </div>
     </main>
   )
 }
