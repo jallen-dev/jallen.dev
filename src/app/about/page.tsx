@@ -20,10 +20,10 @@ function Blurb() {
         I&apos;m a full-stack developer with a decade of professional experience. I mainly write TypeScript on the
         frontend and backend. Lately I have been getting into making web games with React, PixiJS and Three.js. I&apos;m
         building{" "}
-        <a href="https://astroclicker.com" target="_blank">
-          AstroClicker
+        <a href="https://coinjargame.com" target="_blank">
+          Coin Jar
         </a>
-        , a casual incremental game built with React and React-Three-Fiber. You can also check out some{" "}
+        , a physics-based incremental game built with React and PixiJS. You can also check out some{" "}
         <Link href="/projects">other projects</Link> I&apos;ve worked on.
       </p>
       <p>

@@ -6,6 +6,7 @@ import astroclicker from "../../../public/images/astroclicker.png"
 import coinjar from "../../../public/images/coinjar.png"
 import chess from "../../../public/images/dusk-games-previews/chess.png"
 import fruitscape from "../../../public/images/dusk-games-previews/fruitscape.png"
+import jumpKnights from "../../../public/images/dusk-games-previews/jump-knights.png"
 import melanciaGame from "../../../public/images/dusk-games-previews/melancia-game.png"
 import tapTheButton from "../../../public/images/dusk-games-previews/tap-the-button.png"
 import openpilot from "../../../public/images/openpilot.png"
@@ -95,18 +96,22 @@ export default function ProjectsPage() {
         </DuskGame>
         <DuskGame image={melanciaGame}>
           <DuskGame.Name link="https://join.rune.ai/game/SHfLUCF1--">Melancia Game</DuskGame.Name>
-          <DuskGame.Plays plays="995k+" />
+          <DuskGame.Plays plays="1.1M+" />
           <DuskGame.LeaderboardBounty />
         </DuskGame>
         <DuskGame image={tapTheButton}>
           <DuskGame.Name link="https://join.rune.ai/game/Z1yZFtJ7-HAE">Tap The Button</DuskGame.Name>
-          <DuskGame.Plays plays="225k+" />
+          <DuskGame.Plays plays="250k+" />
           <DuskGame.ReactJam place={1} name="React Jam Spring 2024 Multiplayer Challenge" />
         </DuskGame>
         <DuskGame image={chess}>
           <DuskGame.Name link="https://join.rune.ai/game/jvZoyoWb-KwE">Chess</DuskGame.Name>
-          <DuskGame.Plays plays="200k+" />
+          <DuskGame.Plays plays="250k+" />
           <DuskGame.LeaderboardBounty />
+        </DuskGame>
+        <DuskGame image={jumpKnights}>
+          <DuskGame.Name link="https://join.rune.ai/game/0VhdbbIX-aQE">Jump Knights</DuskGame.Name>
+          <DuskGame.Plays plays="2k+" />
         </DuskGame>
       </div>
     </main>
